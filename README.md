@@ -1,4 +1,4 @@
-1. A tutorial for educational purpose only
+1. A project for educational purpose only
 ==========================================
 
 2. Created a fork of SushiSwap DEX.
