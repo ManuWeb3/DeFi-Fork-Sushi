@@ -21,7 +21,6 @@ module.exports = async function ({getNamedAccounts, deployments}) {     // get a
     if(!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {        // process.env is accessible here in deploy script
         console.log(`Verifying on Goerli.Etherscan.......`)
         await verify(sushiToken.address, args)
-        console.log("Verified!")
         console.log("---------")
     }
 }
