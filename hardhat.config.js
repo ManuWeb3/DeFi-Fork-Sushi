@@ -14,7 +14,10 @@ require("dotenv").config()
 const MAINNET_RPC_URL =
     process.env.MAINNET_RPC_URL ||
     process.env.ALCHEMY_MAINNET_RPC_URL ||
-    "https://eth-mainnet.alchemyapi.io/v2/your-api-key"
+    "https://eth-mainnet.alchemyapi.io/v2/s-nj9OTPBrtTKzx7n2It6M2h_EUj55HR" ||  
+    "https://eth-mainnet.g.alchemy.com/v2/VwqKnMFZe3o3PFziGWDt23OjFHfDKYDV"
+// need more clarity and correctness on above 2 URLs when Alchemy.com is up
+
 const GOERLI_RPC_URL =
     process.env.GOERLI_RPC_URL || "https://eth-goerli.g.alchemy.com/v2/IQJlXQb4jj7QnaHfmbTSaIG77uffxL9K"
 const POLYGON_MAINNET_RPC_URL =
@@ -32,10 +35,10 @@ module.exports = {
     defaultNetwork: "hardhat",
     networks: {
         hardhat: {
-            // // If you want to do some forking, uncomment this
-            // forking: {
-            //   url: MAINNET_RPC_URL
-            // }
+            //If you want to do some forking, uncomment this
+            forking: {
+                url: "https://eth-mainnet.g.alchemy.com/v2/VwqKnMFZe3o3PFziGWDt23OjFHfDKYDV",
+            },
             chainId: 31337,
             blockConfirmations: 1,
             allowUnlimitedContractSize: true,       // disables EIP-170 (to deploy GovernorContract.sol)

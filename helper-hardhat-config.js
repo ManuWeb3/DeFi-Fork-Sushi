@@ -26,7 +26,7 @@ module.exports = {
     ALLOCATION_POINT,
     TOKENS_PER_BLOCK,
     BONUS_START_BLOCK,
-    BONUS_END_BLOCK,
+    BONUS_END_BLOCK,    
 }
 
 // syntax: module.exports = {}

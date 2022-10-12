@@ -73,9 +73,9 @@ contract MasterChef is Ownable {
     // The migrator contract. It has a lot of power. Can only be set through governance (owner).
     IMigratorChef public migrator;
 
-    // Info of each pool.
+    // Info of each pool. (array)
     PoolInfo[] public poolInfo;
-    // Info of each user that stakes LP tokens.
+    // Info of each user that stakes LP tokens in the uint256 _pid - staring index in this mapping
     mapping (uint256 => mapping (address => UserInfo)) public userInfo;
     // Total allocation poitns. Must be the sum of all allocation points in all pools.
     uint256 public totalAllocPoint = 0;
@@ -85,9 +85,10 @@ contract MasterChef is Ownable {
     event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
     event Withdraw(address indexed user, uint256 indexed pid, uint256 amount);
     event EmergencyWithdraw(address indexed user, uint256 indexed pid, uint256 amount);
-
+    event PoolCreated(uint256 poolId);
+    
     constructor(
-        SushiToken _sushi,
+        SushiToken _sushi,  // Sushi token's address
         address _devaddr,
         uint256 _sushiPerBlock,
         uint256 _startBlock,
@@ -122,6 +123,8 @@ contract MasterChef is Ownable {
             lastRewardBlock: lastRewardBlock,
             accSushiPerShare: 0
         }));
+        uint256 poolId = poolInfo.length-1;
+        emit PoolCreated(poolId);
     }
 
     // Update the given pool's SUSHI allocation point. Can only be called by the owner.
