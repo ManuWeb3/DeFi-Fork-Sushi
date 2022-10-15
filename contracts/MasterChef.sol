@@ -39,6 +39,7 @@ contract MasterChef is Ownable {
     struct UserInfo {
         uint256 amount;     // How many LP tokens the user has provided.
         uint256 rewardDebt; // Reward debt. See explanation below.
+        // rewardDebt = specific to each staker out there
         //
         // We do some fancy math here. Basically, any point in time, the amount of SUSHIs
         // entitled to a user but is pending to be distributed is:
@@ -58,6 +59,7 @@ contract MasterChef is Ownable {
         uint256 allocPoint;       // How many allocation points assigned to this pool. SUSHIs to distribute per block.
         uint256 lastRewardBlock;  // Last block number that SUSHIs distribution occurs.
         uint256 accSushiPerShare; // Accumulated SUSHIs per share, times 1e12. See below.
+        // accSushiPerShare = specific to each pool out there
     }
 
     // The SUSHI TOKEN!
@@ -176,6 +178,7 @@ contract MasterChef is Ownable {
             uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
             uint256 sushiReward = multiplier.mul(sushiPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
             accSushiPerShare = accSushiPerShare.add(sushiReward.mul(1e12).div(lpSupply));
+            // exactly here the formulae/maths comes into play to calc. 'accSushiPerShare'
         }
         return user.amount.mul(accSushiPerShare).div(1e12).sub(user.rewardDebt);
     }
@@ -223,6 +226,7 @@ contract MasterChef is Ownable {
             user.amount = user.amount.add(_amount);
         }
         user.rewardDebt = user.amount.mul(pool.accSushiPerShare).div(1e12);
+        // that's where the calc. for rewardDebt comes into play
         emit Deposit(msg.sender, _pid, _amount);
     }
 
@@ -241,6 +245,7 @@ contract MasterChef is Ownable {
             pool.lpToken.safeTransfer(address(msg.sender), _amount);
         }
         user.rewardDebt = user.amount.mul(pool.accSushiPerShare).div(1e12);
+        // that's where the calc. for rewardDebt comes into play
         emit Withdraw(msg.sender, _pid, _amount);
     }
 
